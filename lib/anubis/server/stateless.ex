@@ -110,6 +110,9 @@ defmodule Anubis.Server.Stateless do
   not serve the requested version, carrying the versions the client may retry
   with.
 
+  Only defined for a message `request?/1` accepts; any other shape is a caller
+  error and raises.
+
   ## Examples
 
       iex> meta = %{

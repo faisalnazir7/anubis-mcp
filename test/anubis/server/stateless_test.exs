@@ -258,11 +258,15 @@ defmodule Anubis.Server.StatelessTest do
   end
 
   defp request!(session, method, opts \\ []) do
-    session |> dispatch(method, opts) |> Map.fetch!("result")
+    response = dispatch(session, method, opts)
+    assert %{"result" => result} = response
+    result
   end
 
   defp error!(session, method, opts) do
-    session |> dispatch(method, opts) |> Map.fetch!("error")
+    response = dispatch(session, method, opts)
+    assert %{"error" => error} = response
+    error
   end
 
   defp dispatch(session, method, opts) do

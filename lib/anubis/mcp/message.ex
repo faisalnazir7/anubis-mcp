@@ -279,7 +279,7 @@ defmodule Anubis.MCP.Message do
   defp schema_module(%{"params" => %{"_meta" => %{@protocol_version_key => version}}}) when is_binary(version) do
     case Registry.get(version) do
       {:ok, protocol_module} -> protocol_module
-      :error -> Registry.latest_module(:stateless)
+      :error -> Registry.latest_module(:stateless) || Registry.latest_module()
     end
   end
 

@@ -370,6 +370,9 @@ defmodule Anubis.Server.Session do
 
   # A request declaring its own protocol version is admitted per request, and
   # its context travels with the transport context rather than session state.
+  # Notifications cannot declare a version — the stateless era gives them a
+  # `_meta` without one — so their era travels with the transport binding that
+  # opened the connection, and admitting them waits for it.
   defp admit_request(decoded, transport_context, state) do
     if Stateless.request?(decoded) do
       with {:ok, context} <- Stateless.admit(decoded, state.supported_versions),
